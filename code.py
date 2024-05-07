@@ -30,11 +30,7 @@ def test(action):
 def selectSong():
     global openlink
     song=random.choice(songs)
-    songs.pop(songs.index(song))
     song=song.split("|")
-    print(song)
-    print(len(songs))
-    print(song[0])
     country.config(text="Country: "+song[0])
     year.config(text="Year: "+song[1])
     songt.config(text="Song: "+song[3])
