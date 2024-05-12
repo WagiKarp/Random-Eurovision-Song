@@ -37,8 +37,8 @@ def selectSong():
     artist.config(text="Artist(s): "+song[2])
     lang.config(text="Language(s): "+song[4])
     root.update()
-    time.sleep(2.5)
     if openlink:
+        time.sleep(2.5)
         webbrowser.open(song[5])
 def linkbutton():
     global openlink
