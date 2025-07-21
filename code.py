@@ -9,30 +9,56 @@ n=0
 def test(action):
     print(len(songs))
     links=[]
+    entries=[]
     eurovision_countries = ["Albania", "Andorra", "Armenia", "Australia", "Austria", "Azerbaijan","Belarus", "Belgium", "Bosnia and Herzegovina", "Bulgaria", "Croatia","Cyprus", "Czech Republic", "Denmark", "Estonia", "Finland", "France","Georgia", "Germany", "Greece", "Hungary", "Iceland", "Ireland", "Israel","Italy", "Latvia", "Lithuania", "Luxembourg", "Malta", "Moldova", "Monaco","Montenegro", "Netherlands", "North Macedonia", "Norway", "Poland", "Portugal","Romania", "Russia", "San Marino", "Serbia", "Slovakia", "Slovenia", "Spain","Sweden", "Switzerland", "Turkey", "Ukraine", "United Kingdom","Yugoslavia","Morocco","F.Y.R. Macedonia","Czechia","Serbia and Montenegro"]
     for i in songs:
         j=i.split("|")
-        print(j)
+        k=j[0]+" "+j[1]
         if j[5] not in links:
             links.append(j[5])
         else:
             print("Link",j[5],"already in list")
+            print(k)
+            if j[1]=="1956":
+                print(j[3])
             sys.exit()
-        if "https://" not in j[5]:
+        if "https://www.youtube.com/watch?v=" not in j[5]:
             print("link not in right place")
+            print(k)
+            if j[1]=="1956":
+                print(j[3])
             sys.exit()
         if len(j)!=6:
             print("Wrong length")
+            print(k)
+            if j[1]=="1956":
+                print(j[3])
             sys.exit()
         if j[0] not in eurovision_countries:
             print("Not a country")
+            print(k)
+            if j[1]=="1956":
+                print(j[3])
             sys.exit()
         if len(j[5])!=43:
             print("Link wrong length")
+            print(k)
+            if j[1]=="1956":
+                print(j[3])
             sys.exit()
         if int(j[1])<1956 or int(j[1])>2025:
             print("Year wrong")
+            print(k)
+            if j[1]=="1956":
+                print(j[3])
             sys.exit()
+        if k in entries and j[1]!="1956":
+            print("Duplicate entries")
+            print(k)
+            sys.exit()
+        else:
+            entries.append(k)
+    print("All good")
 def selectSong():
     global openlink
     global song
@@ -95,7 +121,7 @@ def forw():
         root.update()
         if openlink:
             time.sleep(2)
-            webbrowser.open(song[5])
+            webbrowser.open(song[5]) #
 songs=["Belgium|1956|Fud Leclerc|Messieurs les noyés de la Seine|French|https://www.youtube.com/watch?v=qFgBJwyKSGg","Belgium|1956|Mony Marc|Le Plus Beau Jour de ma vie|French|https://www.youtube.com/watch?v=9ICOEka_Jqg","France|1956|Mathé Altéry|Le Temps perdu|French|https://www.youtube.com/watch?v=x1e8gPquGVY","France|1956|Dany Dauberson|Il est là|French|https://www.youtube.com/watch?v=9PG4gAPxs18","Germany|1956|Freddy Quinn|So geht das jede Nacht|German|https://www.youtube.com/watch?v=eZIdJT1POUA","Germany|1956|Walter Andreas Schwartz|Im Wartesaal zum großen Glück|German|https://www.youtube.com/watch?v=ZUXVPPfVpos","Italy|1956|Franca Raimondi|Aprite le finestre|Italian|https://www.youtube.com/watch?v=OuVmJmW-8wo","Italy|1956|Tonina Torrielli|Amami se vuoi|Italian|https://www.youtube.com/watch?v=NXcu6HnrYI4","Luxembourg|1956|Michèle Arnaud|Les Amants de minuit|French|https://www.youtube.com/watch?v=n8esgCRxMzs","Luxembourg|1956|Michèle Arnaud|Ne crois pas|French|https://www.youtube.com/watch?v=S62mHHz2ajc","Netherlands|1956|Corry Brokken|Voorgoed voorbij|Dutch|https://www.youtube.com/watch?v=jI4_Z-OCev4","Netherlands|1956|Jetty Paerl|De vogels van Holland|Dutch|https://www.youtube.com/watch?v=u45UQVGRVPA","Switzerland|1956|Lys Assia|Das alte Karussell|German|https://www.youtube.com/watch?v=AAWSHl7BEC4","Switzerland|1956|Lys Assia|Refrain|French|https://www.youtube.com/watch?v=1HKSP_HQ5hk",
        "Austria|1957|Bob Martin|Wohin, kleines Pony?|German|https://www.youtube.com/watch?v=5mETWk_nB1Q","Belgium|1957|Bobbejaan Schoepen|Straatdeuntje|Dutch|https://www.youtube.com/watch?v=mu8ueVHTb9k","Denmark|1957|Birthe Wilke and Gustav Winkler|Skibet skal sejle i nat|Danish|https://www.youtube.com/watch?v=vX3WRMF5TuY","France|1957|Paule Desjardins|La Belle Amour|French|https://www.youtube.com/watch?v=g2-XDnBHEbc","Germany|1957|Margot Heilscher|Telefon, Telefon|German|https://www.youtube.com/watch?v=NoDpE2LtoZA","Italy|1957|Nunzio Gallo|Corde della mia chitarra|Italian|https://www.youtube.com/watch?v=3Ofli5AZpq4","Luxembourg|1957|Danièle Duprè|Tant de peine|French|https://www.youtube.com/watch?v=-0nMxZ8L1cI","Netherlands|1957|Corry Brokken|Net als toen|Dutch|https://www.youtube.com/watch?v=e5gLyP977ew","Switzerland|1957|Lys Assia|L'Enfant que j'étais|French|https://www.youtube.com/watch?v=16ltDhw2lxs","United Kingdom|1957|Patricia Bredin|All|English|https://www.youtube.com/watch?v=LGHNEpTNcXU",
        "Austria|1958|Liane Augustin|Die ganze Welt braucht Liebe|German|https://www.youtube.com/watch?v=AC5E7tl7juU","Belgium|1958|Fud Leclerc|Ma petite chatte|French|https://www.youtube.com/watch?v=i-k1TjSHSjU","Denmark|1958|Raquel Rastenni|Jeg rev et blad ud af min dagbog|Danish|https://www.youtube.com/watch?v=IGMLrLgVmR0","France|1958|André Claveau|Dors mon amour|French|https://www.youtube.com/watch?v=5WA7yXkUuQw","Germany|1958|Margot Hielscher|Für zwei Groschen Musik|German|https://www.youtube.com/watch?v=wnOH9DFtZG0","Italy|1958|Domenico Mondugno|Nel blu, dipinto di blu|Italian|https://www.youtube.com/watch?v=t4IjJav7xbg","Luxembourg|1958|Solange Berry|Un grand amour|French|https://www.youtube.com/watch?v=si14zjMHrhI","Netherlands|1958|Corry Brokken|Heel de wereld|Dutch|https://www.youtube.com/watch?v=EORp_p7cUnM","Sweden|1958|Alice Babs|Lilla stjärna|Swedish|https://www.youtube.com/watch?v=f5DNvsB94uI","Switzerland|1958|Lys Assia|Giorgio|German, Italian|https://www.youtube.com/watch?v=gGsalvX8K4c",
