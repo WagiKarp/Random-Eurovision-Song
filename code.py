@@ -6,7 +6,6 @@ import sys
 openlink=True
 songschosen=[]
 n=0
-fw=True
 def test(action):
     print(len(songs))
     links=[]
@@ -67,13 +66,8 @@ def back():
     global songschosen
     global n
     global song
-    global fw
     if n>0:
-        if fw:
-            fw=False
-            n-=2
-        else:
-            n-=1
+        n-=1
         song=songschosen[n]
         song=song.split("|")
         country.config(text="Country: "+song[0])
@@ -89,13 +83,8 @@ def forw():
     global songschosen
     global n
     global song
-    global fw
     if n<len(songschosen)-1:
-        if not fw:
-            fw=True
-            n+=2
-        else:
-            n+=1
+        n+=1
         song=songschosen[n]
         song=song.split("|")
         country.config(text="Country: "+song[0])
