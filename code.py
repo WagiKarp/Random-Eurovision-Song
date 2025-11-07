@@ -6,12 +6,13 @@ import sys
 openlink=True
 songschosen=[]
 n=0
+eurovision_countries = ['Albania', 'Andorra', 'Armenia', 'Australia', 'Austria', 'Azerbaijan', 'Belarus', 'Belgium', 'Bosnia and Herzegovina', 'Bulgaria', 'Croatia', 'Cyprus', 'Czech Republic', 'Czechia', 'Denmark', 'Estonia', 'F.Y.R. Macedonia', 'Finland', 'France', 'Georgia', 'Germany', 'Greece', 'Hungary', 'Iceland', 'Ireland', 'Israel', 'Italy', 'Latvia', 'Lithuania', 'Luxembourg', 'Malta', 'Moldova', 'Monaco', 'Montenegro', 'Morocco', 'Netherlands', 'North Macedonia', 'Norway', 'Poland', 'Portugal', 'Romania', 'Russia', 'San Marino', 'Serbia', 'Serbia and Montenegro', 'Slovakia', 'Slovenia', 'Spain', 'Sweden', 'Switzerland', 'Turkey', 'Ukraine', 'United Kingdom', 'Yugoslavia']
+eurovision_languages = ["Albanian","Amharic","Antillean Creole","Arabic","Armenian","Azerbaijani","Belarusian","Bosnian","Breton","Bulgarian","Catalan","Corsican","Crimean Tatar","Croatian","Czech","Danish","Dutch","English","Estonian","Finnish","French","Georgian","German","Greek","Hebrew","Hungarian","Icelandic","Imaginary","Irish","Italian","Latin","Latvian","Lithuanian","Luxembourgish","Macedonian","Maltese","Montenegrin","Neapolitan","Northern Sámi","Norwegian","Polish","Portuguese","Romani","Romanian","Romansh","Russian","Samogitian","Serbian","Serbo-Croatian","Slovak","Slovene","Spanish","Sranan Tongo","Surzhyk","Swahili","Swedish","Tahitian","Turkish","Udmurt","Ukrainian","Võro","Yankunytjatjara"]
+eurovision_years=["1956","1957","1958","1959","1960","1961","1962","1963","1964","1965","1966","1967","1968","1969","1970","1971","1972","1973","1974","1975","1976","1977","1978","1979","1980","1981","1982","1983","1984","1985","1986","1987","1988","1989","1990","1991","1992","1993","1994","1995","1996","1997","1998","1999","2000","2001","2002","2003","2004","2005","2006","2007","2008","2009","2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2020","2021","2022","2023","2024","2025"]
 def test(action):
     print(len(songs))
     links=[]
     entries=[]
-    eurovision_countries = ["Albania","Andorra","Armenia","Australia","Austria","Azerbaijan","Belarus","Belgium","Bosnia and Herzegovina","Bulgaria","Croatia","Cyprus","Czech Republic","Denmark","Estonia","Finland","France","Georgia","Germany","Greece","Hungary","Iceland","Ireland","Israel","Italy","Latvia","Lithuania","Luxembourg","Malta","Moldova","Monaco","Montenegro","Netherlands","North Macedonia","Norway","Poland","Portugal","Romania","Russia","San Marino","Serbia","Slovakia","Slovenia","Spain","Sweden","Switzerland","Turkey","Ukraine","United Kingdom","Yugoslavia","Morocco","F.Y.R. Macedonia","Czechia","Serbia and Montenegro"]
-    eurovision_languages = ["Dutch","German","French","Italian","English","Danish","Swedish","Luxembourgish","Norwegian","Spanish","Finnish","Serbian","Croatian","Portuguese","Bosnian","Slovene","Maltese","Irish","Hebrew","Greek","Turkish","Arabic","Icelandic","Romansh","Neapolitan","Antillean Creole", "Corsican","Estonian","Romanian","Slovak","Lithuanian","Hungarian","Russian","Polish","Breton","Macedonian","Samogitian","Imaginary","Latvian","Catalan","Ukrainian","Võro", "Montenegrin","Albanian","Tahitian","Bulgarian","Czech","Armenian","Romani","Swahili","Udmurt","Azerbaijani","Georgian","Serbo-Croatian","Surzhyk","Crimean Tatar","Belarusian","Northern Sámi","Amharic","Sranan Tongo","Latin","Yankunytjatjara"]
     for i in songs:
         j=i.split("|")
         k=j[0]+" "+j[1]
@@ -80,7 +81,28 @@ def selectSong():
     global song
     global songschosen
     global n
-    song=random.choice(songs)
+    limSongs=[]
+    if optCountry.get()=="Country" and optYear.get()=="Year" and optLanguage.get()=="Language":
+        song=random.choice(songs)
+    else:
+        if optCountry.get()!="Country":
+            reqC=optCountry.get()
+            for i in songs:
+                #print(i[0])
+                #print(reqC)
+                if i.split("|")[0]==reqC:
+                    limSongs.append(i)
+        if optYear.get()!="Year":
+            reqY=optYear.get()
+            for i in songs:
+                if i.split("|")[1]==reqY:
+                    limSongs.append(i)
+        if optLanguage.get()!="Language":
+            reqL=optLanguage.get()
+            for i in songs:
+                if reqL in i.split("|")[4].split(",") or " "+reqL in i.split("|")[4].split(","):
+                    limSongs.append(i)
+        song=random.choice(limSongs)    
     songschosen.append(song)
     n=len(songschosen)-1
     song=song.split("|")
@@ -154,6 +176,16 @@ def close():
     sys.exit()
 def close2(action):
     close()
+def reset_dropdowns(changed_var):
+    if changed_var == "country":
+        optLanguage.set("Language")
+        optYear.set("Year")
+    elif changed_var == "language":
+        optCountry.set("Country")
+        optYear.set("Year")
+    elif changed_var == "year":
+        optCountry.set("Country")
+        optLanguage.set("Language")
 songs=["Belgium|1956|Fud Leclerc|Messieurs les noyés de la Seine|French|NA/14|https://www.youtube.com/watch?v=qFgBJwyKSGg","Belgium|1956|Mony Marc|Le Plus Beau Jour de ma vie|French|NA/14|https://www.youtube.com/watch?v=9ICOEka_Jqg","France|1956|Mathé Altéry|Le Temps perdu|French|NA/14|https://www.youtube.com/watch?v=x1e8gPquGVY","France|1956|Dany Dauberson|Il est là|French|NA/14|https://www.youtube.com/watch?v=9PG4gAPxs18","Germany|1956|Freddy Quinn|So geht das jede Nacht|German|NA/14|https://www.youtube.com/watch?v=eZIdJT1POUA","Germany|1956|Walter Andreas Schwartz|Im Wartesaal zum großen Glück|German|NA/14|https://www.youtube.com/watch?v=ZUXVPPfVpos","Italy|1956|Franca Raimondi|Aprite le finestre|Italian|NA/14|https://www.youtube.com/watch?v=OuVmJmW-8wo","Italy|1956|Tonina Torrielli|Amami se vuoi|Italian|NA/14|https://www.youtube.com/watch?v=NXcu6HnrYI4","Luxembourg|1956|Michèle Arnaud|Les Amants de minuit|French|NA/14|https://www.youtube.com/watch?v=n8esgCRxMzs","Luxembourg|1956|Michèle Arnaud|Ne crois pas|French|NA/14|https://www.youtube.com/watch?v=S62mHHz2ajc","Netherlands|1956|Corry Brokken|Voorgoed voorbij|Dutch|NA/14|https://www.youtube.com/watch?v=jI4_Z-OCev4","Netherlands|1956|Jetty Paerl|De vogels van Holland|Dutch|NA/14|https://www.youtube.com/watch?v=u45UQVGRVPA","Switzerland|1956|Lys Assia|Das alte Karussell|German|NA/14|https://www.youtube.com/watch?v=AAWSHl7BEC4","Switzerland|1956|Lys Assia|Refrain|French|1/14|https://www.youtube.com/watch?v=1HKSP_HQ5hk",
        "Austria|1957|Bob Martin|Wohin, kleines Pony?|German|10/10|https://www.youtube.com/watch?v=5mETWk_nB1Q","Belgium|1957|Bobbejaan Schoepen|Straatdeuntje|Dutch|8/10|https://www.youtube.com/watch?v=mu8ueVHTb9k","Denmark|1957|Birthe Wilke and Gustav Winkler|Skibet skal sejle i nat|Danish|3/10|https://www.youtube.com/watch?v=vX3WRMF5TuY","France|1957|Paule Desjardins|La Belle Amour|French|2/10|https://www.youtube.com/watch?v=g2-XDnBHEbc","Germany|1957|Margot Heilscher|Telefon, Telefon|German|4/10|https://www.youtube.com/watch?v=NoDpE2LtoZA","Italy|1957|Nunzio Gallo|Corde della mia chitarra|Italian|6/10|https://www.youtube.com/watch?v=3Ofli5AZpq4","Luxembourg|1957|Danièle Duprè|Tant de peine|French|4/10|https://www.youtube.com/watch?v=-0nMxZ8L1cI","Netherlands|1957|Corry Brokken|Net als toen|Dutch|1/10|https://www.youtube.com/watch?v=e5gLyP977ew","Switzerland|1957|Lys Assia|L'Enfant que j'étais|French|8/10|https://www.youtube.com/watch?v=16ltDhw2lxs","United Kingdom|1957|Patricia Bredin|All|English|7/10|https://www.youtube.com/watch?v=LGHNEpTNcXU",
        "Austria|1958|Liane Augustin|Die ganze Welt braucht Liebe|German|5/10|https://www.youtube.com/watch?v=AC5E7tl7juU","Belgium|1958|Fud Leclerc|Ma petite chatte|French|5/10|https://www.youtube.com/watch?v=i-k1TjSHSjU","Denmark|1958|Raquel Rastenni|Jeg rev et blad ud af min dagbog|Danish|8/10|https://www.youtube.com/watch?v=IGMLrLgVmR0","France|1958|André Claveau|Dors mon amour|French|1/10|https://www.youtube.com/watch?v=5WA7yXkUuQw","Germany|1958|Margot Hielscher|Für zwei Groschen Musik|German|7/10|https://www.youtube.com/watch?v=wnOH9DFtZG0","Italy|1958|Domenico Mondugno|Nel blu, dipinto di blu|Italian|3/10|https://www.youtube.com/watch?v=t4IjJav7xbg","Luxembourg|1958|Solange Berry|Un grand amour|French|9/10|https://www.youtube.com/watch?v=si14zjMHrhI","Netherlands|1958|Corry Brokken|Heel de wereld|Dutch|9/10|https://www.youtube.com/watch?v=EORp_p7cUnM","Sweden|1958|Alice Babs|Lilla stjärna|Swedish|4/10|https://www.youtube.com/watch?v=f5DNvsB94uI","Switzerland|1958|Lys Assia|Giorgio|German, Italian|2/10|https://www.youtube.com/watch?v=gGsalvX8K4c",
@@ -236,26 +268,41 @@ root.config(bg="grey17")
 root.title("Random Eurovision Song Generator")
 tk.Label(root,text="Random Eurovision Song Generator",bg="grey17",fg="white",font=("Calibri",24)).grid(row=0,column=0,columnspan=3,sticky="NESW")
 tk.Label(root,text="Press the button below or press enter to generate a song",bg="grey17",fg="white",font=("Calibri",24)).grid(row=1,column=0,columnspan=3,sticky="NESW")
-tk.Button(root,text="Generate Song",command=selectSong,bg="grey17",fg="white",activebackground="grey21",activeforeground="white",font=("Calibri",24)).grid(row=2,column=0,columnspan=3,sticky="NESW")
+optCountry=tk.StringVar(value="Country")
+optLanguage=tk.StringVar(value="Language")
+optYear=tk.StringVar(value="Year")
+dropdownC=tk.OptionMenu(root,optCountry,*eurovision_countries,command=lambda _: reset_dropdowns("country"))
+dropdownY=tk.OptionMenu(root,optYear,*eurovision_years,command=lambda _: reset_dropdowns("year"))
+dropdownL=tk.OptionMenu(root,optLanguage,*eurovision_languages,command=lambda _: reset_dropdowns("language"))
+dropdownC["menu"].config(fg="white",bg="grey17",activebackground="grey25")
+dropdownY["menu"].config(fg="white",bg="grey17",activebackground="grey25")
+dropdownL["menu"].config(fg="white",bg="grey17",activebackground="grey25")
+dropdownC.config(fg="white",bg="grey17",activeforeground="white",activebackground="grey21")
+dropdownY.config(fg="white",bg="grey17",activeforeground="white",activebackground="grey21")
+dropdownL.config(fg="white",bg="grey17",activeforeground="white",activebackground="grey21")
+dropdownC.grid(row=2,column=0,sticky="NESW")
+dropdownY.grid(row=2,column=1,sticky="NESW")
+dropdownL.grid(row=2,column=2,sticky="NESW")
+tk.Button(root,text="Generate Song",command=selectSong,bg="grey17",fg="white",activebackground="grey21",activeforeground="white",font=("Calibri",24)).grid(row=3,column=0,columnspan=3,sticky="NESW")
 songt=tk.Label(root,text="Song: ",bg="grey17",fg="white",font=("Calibri",24))
-songt.grid(row=5,column=1,sticky="NESW")
+songt.grid(row=6,column=1,sticky="NESW")
 artist=tk.Label(root,text="Artist(s): ",bg="grey17",fg="white",font=("Calibri",24))
-artist.grid(row=6,column=1,sticky="NESW")
+artist.grid(row=7,column=1,sticky="NESW")
 year=tk.Label(root,text="Year: ",bg="grey17",fg="white",font=("Calibri",24))
-year.grid(row=4,column=1,sticky="NESW")
+year.grid(row=5,column=1,sticky="NESW")
 country=tk.Label(root,text="Country: ",bg="grey17",fg="white",font=("Calibri",24))
-country.grid(row=3,column=1,sticky="NESW")
+country.grid(row=4,column=1,sticky="NESW")
 lang=tk.Label(root,text="Language(s): ",bg="grey17",fg="white",font=("Calibri",24))
-lang.grid(row=7,column=1,sticky="NESW")
+lang.grid(row=8,column=1,sticky="NESW")
 position=tk.Label(root,text="Final Placement:",bg="grey17",fg="white",font=("Calibri",24))
-position.grid(row=8,column=1,sticky="NESW")
+position.grid(row=9,column=1,sticky="NESW")
 olink=tk.Button(root,text="Open link: On", bg="grey17",fg="white",font=("Calibri",24),activeforeground="white",activebackground="grey21",command=linkbutton)
-olink.grid(row=9,column=0,columnspan=3,sticky="NESW")
+olink.grid(row=10,column=0,columnspan=3,sticky="NESW")
 backb=tk.Button(root,text="↩",bg="grey17",fg="white",font=("Calibri",24),activeforeground="white",activebackground="grey21",command=back)
-backb.grid(row=3,column=0,rowspan=6,sticky="NSW")
+backb.grid(row=4,column=0,rowspan=6,sticky="NSW")
 forwb=tk.Button(root,text="↪",bg="grey17",fg="white",font=("Calibri",24),activeforeground="white",activebackground="grey21",command=forw)
-forwb.grid(row=3,column=2,rowspan=6,sticky="NES")
-tk.Label(root,text="   ",bg="grey17").grid(row=10,column=0,columnspan=3)
+forwb.grid(row=4,column=2,rowspan=6,sticky="NES")
+tk.Label(root,text="   ",bg="grey17").grid(row=11,column=0,columnspan=3)
 closeb=tk.Button(root,text="Close app",bg="grey17",fg="white",font=("Calibri",24),activeforeground="white",activebackground="grey21",command=close)
-closeb.grid(row=11,column=0,columnspan=3,sticky="NESW")
+closeb.grid(row=12,column=0,columnspan=3,sticky="NESW")
 root.mainloop()
