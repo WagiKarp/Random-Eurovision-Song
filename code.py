@@ -48,7 +48,7 @@ def test(action):
             if j[1]=="1956":
                 print(j[3])
             sys.exit()
-        if int(j[1])<1956 or int(j[1])>2026:
+        if j[1].strip() not in eurovision_years:
             print(k)
             if j[1]=="1956":
                 print(j[3])
